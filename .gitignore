@@ -75,5 +75,8 @@ typings/
 # VSCode
 .vscode
 
-# Production buide
+# Production build
 build
+
+# Bulk files
+bulk
