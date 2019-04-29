@@ -8,15 +8,17 @@
     "build": "NODE_ENV=production babel -d ./build ./src -s",
     "prestart": "npm build",
     "start": "node ./build/index.js",
-    "dev": "NODE_ENV=development node_modules/.bin/nodemon --exec babel-node ./src/index.js",
+    "dev": "NODE_ENV=development nodemon --exec babel-node ./src/index.js",
     "lint": "eslint ./src/**/*.js --quiet"
   },
   "author": "Matheus Almeida <mat.almeida@live>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cli-spinner": "0.2.10",
     "compression": "1.7.4",
     "dotenv": "6.1.0",
+    "download": "7.1.0",
     "express": "^4.16.4",
     "express-cors": "0.0.3",
     "helmet": "3.14.0",
@@ -34,7 +36,7 @@
     "eslint": "^5.8.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "nodemon": "1.18.7",
+    "nodemon": "1.18.11",
     "prettier": "^1.14.3",
     "source-map-support": "0.5.9"
   }
