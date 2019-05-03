@@ -15,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "cli-spinner": "0.2.10",
     "compression": "1.7.4",
     "dotenv": "6.1.0",
     "download": "7.1.0",
@@ -24,6 +23,7 @@
     "helmet": "3.14.0",
     "node-cron": "2.0.3",
     "request": "2.88.0",
+    "stream-json": "1.2.1",
     "winston": "3.2.1"
   },
   "devDependencies": {
