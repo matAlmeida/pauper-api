@@ -34,35 +34,39 @@ const deleteFolderRecursive = (path) => {
   }
 };
 
-const fetchBulkData = () => {
-  request.get(`${config.BASE_URL}/bulk-data`, (error, r, body) => {
-    if (error) {
-      console.error(error);
-    }
+const fetchBulkData = () =>
+  new Promise((resolve, reject) => {
+    request.get(`${config.BASE_URL}/bulk-data`, (error, r, body) => {
+      if (error) {
+        console.error(error);
+        reject();
+      }
 
-    const { data } = JSON.parse(body);
-    const allCardsBulk = data.filter((bulk) => bulk.type === 'all_cards');
-    const dirPrefix = 'bulk';
+      const { data } = JSON.parse(body);
+      const allCardsBulk = data.filter((bulk) => bulk.type === 'all_cards');
+      const dirPrefix = 'bulk';
 
-    if (fetchedIsNew(dirPrefix, allCardsBulk.updated_at)) {
-      const spinner = new Spinner('> Fetching new Bulk...');
-      spinner.setSpinnerString(14);
-      spinner.start();
-      deleteFolderRecursive(dirPrefix);
+      if (fetchedIsNew(dirPrefix, allCardsBulk.updated_at)) {
+        const spinner = new Spinner('> Fetching new Bulk...');
+        spinner.setSpinnerString(14);
+        spinner.start();
+        deleteFolderRecursive(dirPrefix);
 
-      const downloadURL =
-        'https://archive.scryfall.com/json/scryfall-all-cards.json';
-      const downloadOptions = {
-        decompress: true
-      };
+        const downloadURL =
+          'https://archive.scryfall.com/json/scryfall-all-cards.json';
+        const downloadOptions = {
+          decompress: true
+        };
 
-      download(downloadURL, dirPrefix, downloadOptions).then(() => {
-        spinner.stop();
-      });
-    } else {
-      console.log('info: Bulk already updated');
-    }
+        download(downloadURL, dirPrefix, downloadOptions).then(() => {
+          spinner.stop();
+          resolve();
+        });
+      } else {
+        console.log('info: Bulk already updated');
+        resolve();
+      }
+    });
   });
-};
 
 export { fetchBulkData };
