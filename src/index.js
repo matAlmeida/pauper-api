@@ -1,8 +1,8 @@
 import server from './server';
 import { runDaily } from '~/cronjobs';
 import { fetchBulkData } from '~/cronjobs/fetchBulkData';
+import { savePauperToBulk } from '~/cronjobs/sanitizeOnlyPauper';
 
-fetchBulkData();
-runDaily(fetchBulkData);
+runDaily([fetchBulkData, savePauperToBulk]);
 
 export default server;
