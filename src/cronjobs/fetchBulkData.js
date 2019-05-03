@@ -39,6 +39,7 @@ const fetchBulkData = () =>
     request.get(`${config.BASE_URL}/bulk-data`, (error, r, body) => {
       if (error) {
         console.error(error);
+        reject();
       }
 
       const { data } = JSON.parse(body);
@@ -63,7 +64,7 @@ const fetchBulkData = () =>
         });
       } else {
         console.log('info: Bulk already updated');
-        reject();
+        resolve();
       }
     });
   });
