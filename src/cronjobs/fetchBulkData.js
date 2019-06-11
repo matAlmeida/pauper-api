@@ -63,6 +63,7 @@ const fetchBulkData = () =>
           resolve();
         });
       } else {
+        process.env.BULK_UPDATED = true;
         console.log('info: Bulk already updated');
         resolve();
       }

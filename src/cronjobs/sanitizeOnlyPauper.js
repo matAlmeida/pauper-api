@@ -4,6 +4,15 @@
 import fs from 'fs';
 import path from 'path';
 import StreamArray from 'stream-json/streamers/StreamArray';
+import { Spinner } from 'cli-spinner';
+
+const alreadySanitized = (path) => {
+  if (process.env.BULK_UPDATED && fs.existsSync(path)) {
+    return true;
+  }
+
+  return false;
+};
 
 const filterPauperFromBulk = () =>
   new Promise((resolve, reject) => {
@@ -38,9 +47,20 @@ const filterPauperFromBulk = () =>
   });
 
 const savePauperToBulk = async () => {
-  console.log('info: Starting sanitizing...');
+  const pauperCardsPath = path.join(__dirname, '../../bulk/pauper-cards.json');
+
+  if (alreadySanitized(pauperCardsPath)) {
+    console.log('info: Bulk already sanitized');
+    return;
+  }
+
+  console.log('info: The sanitize may take several minutes to finish!');
+  const spinner = new Spinner('> Starting sanitize...');
+  spinner.setSpinnerString(14);
+  spinner.start();
   await filterPauperFromBulk();
-  console.log('info: Finished sanitizing...');
+  spinner.stop();
+  console.log('\ninfo: Finished sanitize...');
 };
 
 export { savePauperToBulk };
